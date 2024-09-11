@@ -6,4 +6,10 @@ export class File extends Nodo{
         super(name);
     }
 
+    
+    public get getData() : string {
+        return this.datos;
+    }
+    
+
 }

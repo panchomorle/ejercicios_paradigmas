@@ -1,4 +1,4 @@
-import { Salario } from "./Salarios"
+import { Salario } from "./ISalario"
 
 export class Empleado{
     constructor(private nombre: string, private salario: Salario, private horas: number){

@@ -1,12 +1,19 @@
-import { Compania } from "./Compania";
-import { Empleado } from "./Empleado";
-import { SalarioHora, SalarioMes } from "./Salarios";
-import { ReporteSalarios, ReporteHoras } from "./Reportes";
+import { FabricaCompania } from "./Fabricas/FabricaCompania";
+import { FabricaEmpleado } from "./Fabricas/FabricaEmpleado";
+import { FabricaReporteHoras, FabricaReporteSalarios } from "./Fabricas/FabricaReporte";
+import { FabricaSalarioHora, FabricaSalarioMes } from "./Fabricas/FabricaSalario";
 
-const c = new Compania('Arcor',
-    [   new Empleado("Juan", new SalarioMes(230000), 28),
-        new Empleado("Pedrito", new SalarioHora(5600), 12),
-        new Empleado("Alfonso", new SalarioHora(3500), 36),
+const fCompanias = new FabricaCompania;
+const fEmpleados = new FabricaEmpleado;
+const fSalariosMes = new FabricaSalarioMes;
+const fSalariosHora = new FabricaSalarioHora;
+const fReportesHora = new FabricaReporteHoras;
+const fReportesSalarios = new FabricaReporteSalarios;
+
+const c = fCompanias.crearCompania('Arcor',
+    [   fEmpleados.crearEmpleado("Juan", fSalariosMes.crearSalario(230000), 28),
+        fEmpleados.crearEmpleado("Pedrito", fSalariosHora.crearSalario(5600), 12),
+        fEmpleados.crearEmpleado("Alfonso", fSalariosHora.crearSalario(3500), 36),
     ]);
 
 describe('Compania', () => {
@@ -18,10 +25,10 @@ describe('Compania', () => {
 describe('Empleados', () => {
     it('Cambia categoría salario', ()=>{
         //Le damos un salario mensual a Pedrito
-        c.getEmpleados[1].setSalario = new SalarioMes(360000);
+        c.getEmpleados[1].setSalario = fSalariosMes.crearSalario(360000);
         expect(c.getEmpleados[1].getSalario).toBe(360000);
         //Le damos un salario por hora a Juan
-        c.getEmpleados[0].setSalario = new SalarioHora(8000);
+        c.getEmpleados[0].setSalario = fSalariosHora.crearSalario(8000);
         expect(c.getEmpleados[0].getSalario).toBe(224000);
     });
     it('Cambia horas de trabajo', ()=>{
@@ -32,11 +39,11 @@ describe('Empleados', () => {
 
 describe('Reportes', () => {
     it('Genera reporte de nomina mensual', ()=>{
-        const r = new ReporteSalarios(c);
+        const r = fReportesSalarios.crearReporte(c);
         console.log(r.imprimir());
     });
     it('Genera reporte de horas trabajadas', ()=>{
-        const r = new ReporteHoras(c);
+        const r = fReportesHora.crearReporte(c);
         console.log(r.imprimir());
     });
 });

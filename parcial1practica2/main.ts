@@ -1,46 +1,23 @@
-import { Consola } from "./Consola";
-import { Folder } from "./Folder";
-import * as readline from 'readline';
+import { Epic } from "./Epic";
+import { Proyecto } from "./Proyecto";
+import { UserStory } from "./UserStory";
 
-export class Main {
-
-    public static main(): void {
-      const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-      });
-      const c = new Consola(new Folder("/"))
-      c.getCurrent.add(new Folder("Carpeta1"))
-      this.AskForInput(c, rl);
+class main {
+    public static Main(){
+        const p = Proyecto.getProyecto();
+        p.addItem(new Epic("desarrollar modulo de facturación", 1));
+        p.addItem(new Epic("desarrollar modulo de ventas", 1));
+        p.getItems()[0].addChild(new Epic("Creación de Factura", 1));
+        p.getItems()[0].addChild(new Epic("Guardado de Factura", 2));
+        p.getItems()[0].addChild(new Epic("Impresion de Factura", 3));
+        
+        p.getItems()[0].getChildren()[0].addChild(new UserStory("Calcular el monto de la factura", 1, 20, "fua loco", "pedrito"));
+        p.getItems()[0].getChildren()[0].addChild(new UserStory("Calcular el precio de facturacion", 2, 30, "ola", "pablo"));
+        p.getItems()[0].getChildren()[0].addChild(new UserStory("Calcular items", 3, 24, "arre", "pablo"));
+        p.getItems()[0].getChildren()[2].addChild(new UserStory("Inyectar tinta", 1, 12, "arre", "fulano"));
+        console.log(p.getItems()[0].getTotalHours());
     }
+    
+}
 
-    public static AskForInput(c: Consola, rl: readline.Interface){
-      // Lee la entrada del usuario 
-      rl.question(`${c.getCurrent.getPath()}>>`, (input: string) => {
-        if(input=="ls"){
-          c.ls();
-        }
-        else if(input.slice(0, 3)=="cd "){
-          c.cd(input.slice(3));
-        }
-        else if(input.slice(0, 6)=="mkdir "){
-          c.mkdir(input.slice(6));
-        }
-        else if(input.slice(0, 6)=="touch "){
-          c.touch(input.slice(6));
-        }
-        else if(input=="lsp"){
-          c.lsp();
-        }
-        else if(input=="pwd"){
-          c.pwd();
-        }
-        else{
-          console.log("Entrada no reconocida.");
-        }
-        this.AskForInput(c, rl);  // Cierra la interfaz de lectura
-      });
-      }
-  }
-  
-  Main.main(); // Ejecuta el método main para ver el resultado
+main.Main();
