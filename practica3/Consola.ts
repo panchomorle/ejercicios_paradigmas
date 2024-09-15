@@ -6,16 +6,18 @@ type Command = 'mkdir' | 'touch' | 'cd' | 'ls' | 'lsp' | 'pwd' | 'close' | 'cat'
 const validCommands: Command[] = ['mkdir', 'touch', 'cd', 'ls', 'lsp', 'pwd', 'close', 'cat'];
 
 export class Consola{
+    private terminal: OperacionesConsola;
     /**
      * hint: usar indexación de propiedades con corchetes
      * para acceder dinámicamente a los métodos
      */
     constructor(protected current: Folder) {
+        this.terminal = OperacionesConsola.getInstance();
     }
 
     async open(){
         while(true){
-            const [input, ...args] = (await OperacionesConsola.getInstance().read()) as [Command, ...string[]]
+            const [input, ...args] = (await this.terminal.read(this.current.getPath())) as [Command, ...string[]]
             try {
                 if(!validCommands.includes(input)){
                     throw new Error("Comando inválido o desconocido.");

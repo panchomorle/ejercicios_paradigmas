@@ -12,13 +12,13 @@ export class OperacionesConsola {
     return this.instance
   }
 
-  async read(): Promise<string[]> {
+  async read(path: string): Promise<string[]> {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     })
 
-    const answer = await rl.question(">: ")
+    const answer = await rl.question(`>${path}:`)
     rl.close()
     return answer.split(' ')
   }
