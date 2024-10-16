@@ -20,7 +20,9 @@ export class UserStory extends ScrumObject{
     //The user can alter the state of the u.s only
     setState(state: State){
         this.state = state;
-        if (this.parent) this.parent.notify();
+        if (this.parent){
+            this.parent.notify()
+        };
     }
 
 }

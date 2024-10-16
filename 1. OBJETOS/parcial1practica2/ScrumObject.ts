@@ -18,6 +18,10 @@ export abstract class ScrumObject {
         return this.state;
     }
 
+    setState(state: State){
+        
+    }
+
     getParent(){
         return this.parent;
     }
@@ -28,5 +32,10 @@ export abstract class ScrumObject {
 
     addChild(child: ScrumObject){
         console.log("No puedes añadir nada a este objeto.");
+    }
+
+    getChildren(): ScrumObject[]{
+        console.log("El objeto no tiene hijos");
+        return [];
     }
 }

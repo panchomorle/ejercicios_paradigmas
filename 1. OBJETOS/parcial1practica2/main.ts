@@ -11,11 +11,18 @@ class main {
         p.getItems()[0].addChild(new Epic("Guardado de Factura", 2));
         p.getItems()[0].addChild(new Epic("Impresion de Factura", 3));
         
-        p.getItems()[0].getChildren()[0].addChild(new UserStory("Calcular el monto de la factura", 1, 20, "fua loco", "pedrito"));
-        p.getItems()[0].getChildren()[0].addChild(new UserStory("Calcular el precio de facturacion", 2, 30, "ola", "pablo"));
-        p.getItems()[0].getChildren()[0].addChild(new UserStory("Calcular items", 3, 24, "arre", "pablo"));
+        const creacionFactura = p.getItems()[0].getChildren()[0]
+        creacionFactura.addChild(new UserStory("Calcular el monto de la factura", 1, 20, "fua loco", "pedrito"));
+        creacionFactura.addChild(new UserStory("Calcular el precio de facturacion", 2, 30, "ola", "pablo"));
+        creacionFactura.addChild(new UserStory("Calcular items", 3, 24, "arre", "pablo"));
         p.getItems()[0].getChildren()[2].addChild(new UserStory("Inyectar tinta", 1, 12, "arre", "fulano"));
         console.log(p.getItems()[0].getTotalHours());
+
+        console.log(creacionFactura.getState());
+        creacionFactura.getChildren()[0].setState("listo");
+        creacionFactura.getChildren()[1].setState("listo");
+        creacionFactura.getChildren()[2].setState("listo");
+        console.log(creacionFactura.getState());
     }
     
 }

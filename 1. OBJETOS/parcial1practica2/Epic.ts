@@ -1,7 +1,8 @@
-import { ScrumObject} from "./ScrumObject";
+import { ScrumObject, State} from "./ScrumObject";
 
 export class Epic extends ScrumObject{
     protected children: ScrumObject[] = [];
+    private ready: State = "listo";
 
     getTotalHours(): number {
         return this.hoursWorked + this.children.reduce((ac, child)=>ac+child.getTotalHours(), 0);
@@ -23,8 +24,13 @@ export class Epic extends ScrumObject{
     }
 
     notify(): void{
-        if (this.children.every((child)=>{child.getState() === "listo"})) {
+        this.children.forEach((child, index) => {
+            console.log(`Checking child ${index}: ${child.getState() === this.ready}`);
+          });
+        if (this.children.every((child)=>{child.getState() === this.ready})) {
             this.state = "listo";
+            console.log("Epic changed to 'listo' ");
         }
+        console.log("not ready");
     }
 }
